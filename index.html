@@ -94,7 +94,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opa
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* ===== Abertura ===== */
-.intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;perspective:1200px;pointer-events:none}
+.intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;perspective:1200px;pointer-events:none;background:var(--noite);animation:introSafe .6s ease 4s forwards}
+@keyframes introSafe{to{opacity:0;visibility:hidden}}
+.intro.is-live{background:transparent}
 .intro__glow{position:absolute;inset:0;background:radial-gradient(40% 50% at 50% 46%,rgba(217,160,60,.95),rgba(156,85,48,.35) 55%,transparent 75%),var(--noite);opacity:0}
 .intro__slats{position:absolute;inset:0;display:flex}
 .intro__slat{flex:1;height:100%;background:linear-gradient(90deg,#2C1E13,#3A2817 45%,#22170E);box-shadow:inset -1px 0 0 rgba(0,0,0,.45);transform-origin:50% 50%;backface-visibility:hidden}
@@ -857,6 +859,7 @@ html.js .rv{opacity:0;transform:translateY(28px)}
     var n = window.innerWidth < 600 ? 9 : 16;
     for (var i = 0; i < n; i++) sl.appendChild(document.createElement('div')).className = 'intro__slat';
     var slats = sl.children;
+    intro.classList.add('is-live'); intro.style.animation = 'none';
     var itl = gsap.timeline({ defaults: { ease: EASE }, onComplete: finishIntro });
     itl.to('.intro__glow', { opacity: 1, duration: 0.9 }, 0.1)
        .to(slats, { rotateY: 18, duration: 0.6, stagger: { each: 0.02, from: 'center' } }, 0.25)
